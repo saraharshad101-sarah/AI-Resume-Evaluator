@@ -76,7 +76,6 @@ Document:
     # reject the document rather than analyzing it.
     return False
 
-
 def analyze_resume(resume_text):
     """
     Analyze a document that has already been validated as a resume.
@@ -105,53 +104,60 @@ STRICT ANTI-HALLUCINATION RULES:
   information.
 - Do not fabricate examples containing candidate-specific information.
 
-Provide the analysis using these sections:
+First, give the resume a score from 0 to 100 using these categories:
 
-1. Overall Assessment
-Give a brief assessment of the resume's current quality based only
-on the actual resume.
+- Content Quality: 25 points
+- Skills & Experience Presentation: 20 points
+- Structure & Organization: 20 points
+- ATS & Readability: 20 points
+- Overall Professional Presentation: 15 points
 
-2. Skills Identified
+The total score must equal the sum of these five category scores.
+
+Then provide the analysis using these sections:
+
+1. Resume Score
+Show:
+- Overall Score: X/100
+- Content Quality: X/25
+- Skills & Experience Presentation: X/20
+- Structure & Organization: X/20
+- ATS & Readability: X/20
+- Overall Professional Presentation: X/15
+
+2. Overall Assessment
+Give a brief assessment based only on the actual resume.
+
+3. Skills Identified
 List ONLY skills, technologies, tools, languages, or competencies
 explicitly mentioned in the resume.
 
-3. Strengths
+4. Strengths
 Identify genuine strengths supported by the resume.
 
-4. Areas for Improvement
-Identify specific weaknesses or areas that could be improved.
-Do not invent missing facts.
+5. Areas for Improvement
+Identify specific weaknesses supported by the resume.
 
-5. Resume Structure & Formatting
+6. Resume Structure & Formatting
 Evaluate structure, organization, readability, and formatting based
-only on what can reasonably be determined from the resume text.
+only on what can reasonably be determined from the resume.
 
-6. ATS & Readability
+7. ATS & Readability
 Identify potential ATS and readability issues based on the actual
 resume content.
-Do not claim that something is missing unless it is actually absent.
 
-7. Missing or Weak Sections
+8. Missing or Weak Sections
 Identify sections that are missing or insufficiently detailed.
 
-8. Actionable Recommendations
+9. Actionable Recommendations
 Give practical recommendations for improving the resume.
 
 IMPORTANT:
-When recommending something that is not currently present, phrase it
-as a recommendation.
-
-For example:
-"Consider adding a professional summary if appropriate."
-
-Do NOT write:
-"The candidate should add their Python skills."
-
-unless Python is actually present in the resume.
-
-Do not provide fake candidate-specific examples.
-
-Keep the response organized, professional, and concise.
+- Do not claim something is missing unless the resume actually lacks it.
+- Recommendations must be clearly separated from existing candidate
+  information.
+- Never create fake candidate-specific examples.
+- Keep the analysis organized, professional, and concise.
 
 RESUME:
 {resume_text}
