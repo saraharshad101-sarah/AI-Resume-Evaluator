@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template
 from services.parser import extract_text
 from analyzer import analyze_resume, is_resume
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -50,15 +51,17 @@ def upload():
             error="Only PDF or DOCX files are allowed."
         )
 
+    safe_filename = secure_filename(file.filename)
+
     save_path = os.path.join(
         app.config["UPLOAD_FOLDER"],
-        file.filename
+        safe_filename
     )
 
     file.save(save_path)
 
     try:
-        extension = file.filename.rsplit(".", 1)[1].lower()
+        extension = safe_filename.rsplit(".", 1)[1].lower()
 
         resume_text = extract_text(
             save_path,
