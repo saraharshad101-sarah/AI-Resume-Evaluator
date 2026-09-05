@@ -66,7 +66,15 @@ Document:
 
     result = response.content.strip().upper()
 
-    return result == "VALID"
+    if result.startswith("VALID"):
+        return True
+
+    if result.startswith("INVALID"):
+        return False
+  
+    # If the model returns an unexpected response,
+    # reject the document rather than analyzing it.
+    return False
 
 
 def analyze_resume(resume_text):
