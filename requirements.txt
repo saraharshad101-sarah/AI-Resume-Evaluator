@@ -1,0 +1,8 @@
+Flask==3.0.3
+pypdf
+python-docxFlask==3.0.3
+pypdf
+python-docx
+langchain
+langchain-google-genai
+python-dotenv
