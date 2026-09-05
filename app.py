@@ -99,11 +99,13 @@ def upload():
         )
 
     except Exception as e:
+        if os.path.exists(save_path):
+            os.remove(save_path)
+
         return render_template(
             "index.html",
             error=f"An error occurred while processing the resume: {str(e)}"
         )
-
 
 if __name__ == "__main__":
     os.makedirs(
