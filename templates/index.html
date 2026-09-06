@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,162 +9,569 @@
   <title>Resume Feedback AI</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
   <main class="page-shell">
-    <header class="site-header">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">R</div>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" role="img">
+        <path d="M7 3.75h7.25L19 8.5v11.75H7z" />
+        <path d="M14 3.75V9h5M10 13h6M10 16h6" />
+      </svg>
+    </div>
+
+    <div>
+      <p class="brand-name">Resume Feedback AI</p>
+      <p class="brand-subtitle">Clarity for your next opportunity</p>
+    </div>
+  </div>
+
+  <div class="header-note">
+    <span class="status-dot" aria-hidden="true"></span>
+    AI-powered review
+  </div>
+</header>
+
+
+<section class="hero" aria-labelledby="page-title">
+
+  <div class="hero-copy-block">
+    <p class="eyebrow">Career prep, made clearer</p>
+
+    <h1 id="page-title">
+      Turn your resume into your next opportunity.
+    </h1>
+
+    <p class="hero-copy">
+      Get practical, AI-powered feedback on the resume you are about to send into the world.
+    </p>
+  </div>
+
+  <div
+    class="hero-badge"
+    aria-label="Built for students and early-career applicants"
+  >
+    <span class="hero-badge-icon" aria-hidden="true">✦</span>
+
+    <span>
+      <strong>Built for your next step</strong>
+      <small>Students &amp; early-career talent</small>
+    </span>
+  </div>
+
+</section>
+
+
+{% if error %}
+  <div class="notice notice-error" role="alert">
+    {{ error }}
+  </div>
+{% endif %}
+
+{% if success %}
+  <div class="notice notice-success" role="status">
+    {{ success }}
+  </div>
+{% endif %}
+
+
+<section
+  class="workspace"
+  aria-label="Resume evaluation workspace"
+>
+
+  <div class="panel upload-panel">
+
+    <div class="panel-heading">
+      <div>
+        <span class="panel-kicker">Step 01</span>
+
+        <h2>Bring your best draft</h2>
+
+        <p>
+          Start with the resume you are currently working on.
+        </p>
+      </div>
+    </div>
+
+
+    <form
+      action="/upload"
+      method="post"
+      enctype="multipart/form-data"
+    >
+
+      <label class="file-drop" for="resume-file">
+
+        <input
+          class="file-input"
+          id="resume-file"
+          type="file"
+          name="resume"
+          accept=".pdf,.docx"
+          required
+        >
+
+        <span class="upload-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 16V4M8 8l4-4 4 4M5 15v4h14v-4" />
+          </svg>
+        </span>
+
+        <span class="drop-title">
+          Drop your resume here
+        </span>
+
+        <span class="drop-action">
+          or <strong>browse your files</strong>
+        </span>
+
+        <span class="drop-hint">
+          PDF or DOCX
+          <i></i>
+          up to 10 MB
+        </span>
+
+      </label>
+
+
+      <div
+        class="file-status"
+        id="file-status"
+        aria-live="polite"
+      >
+        <span
+          class="file-status-icon"
+          aria-hidden="true"
+        >+</span>
+
+        <span>No file selected yet</span>
+      </div>
+
+
+      <button
+        class="submit-button"
+        type="submit"
+      >
+        <span>Analyze my resume</span>
+
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M5 12h13M13 6l6 6-6 6" />
+        </svg>
+      </button>
+
+
+      <p class="form-footnote">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z" />
+        </svg>
+
+        Your document is used only to generate this review.
+      </p>
+
+    </form>
+
+  </div>
+
+
+  <section
+    class="panel results-panel"
+    aria-labelledby="analysis-title"
+  >
+
+    {% if analysis %}
+
+      <div class="results-header">
+
         <div>
-          <p class="brand-name">Resume Feedback AI</p>
-          <p class="brand-subtitle">Clarity for your next opportunity</p>
-        </div>
-      </div>
-      <p class="header-note">AI-powered review</p>
-    </header>
+          <p class="panel-kicker">Step 02</p>
 
-    <section class="hero" aria-labelledby="page-title">
-      <p class="eyebrow">Make your experience count</p>
-      <h1 id="page-title">A sharper resume starts here.</h1>
-      <p class="hero-copy">Upload your resume and get thoughtful, practical feedback to help your experience stand out.</p>
-    </section>
+          <h2 id="analysis-title">
+            Your resume, decoded
+          </h2>
 
-    {% if error %}
-      <div class="notice notice-error" role="alert">{{ error }}</div>
-    {% endif %}
-    {% if success %}
-      <div class="notice notice-success" role="status">{{ success }}</div>
-    {% endif %}
-
-    <section class="workspace" aria-label="Resume evaluation workspace">
-      <div class="panel upload-panel">
-        <div class="panel-heading">
-          <div>
-            <h2>Upload resume</h2>
-            <p>Start with your latest version.</p>
-          </div>
-          <span class="step-number" aria-hidden="true">01</span>
+          <p>
+            Specific observations to help you move forward with confidence.
+          </p>
         </div>
 
-        <form action="/upload" method="post" enctype="multipart/form-data">
-          <label class="file-drop" for="resume-file">
-            <input class="file-input" id="resume-file" type="file" name="resume" accept=".pdf,.docx" required>
-            <span class="upload-icon" aria-hidden="true">+</span>
-            <span class="drop-title">Choose a file to review</span>
-            <span class="drop-hint">PDF or DOCX, up to 10 MB</span>
-          </label>
-          <div class="file-status" id="file-status" aria-live="polite">No file selected yet</div>
-          <button class="submit-button" type="submit">Analyze my resume</button>
-          <p class="form-footnote">Your document is used only to generate this review.</p>
-        </form>
+        <span
+          class="results-icon"
+          aria-hidden="true"
+        >✓</span>
+
       </div>
 
-      <section class="panel results-panel" aria-labelledby="analysis-title">
-        {% if analysis %}
-          <div class="results-header">
-            <p class="eyebrow">Your review</p>
-            <h2 id="analysis-title">AI resume analysis</h2>
-            <p>Specific observations to help you move forward with confidence.</p>
-          </div>
-          <div class="analysis" id="analysis-content">{{ analysis }}</div>
-        {% else %}
-          <div class="empty-results">
-            <div>
-              <strong>Your insights will appear here.</strong>
-              <span>Upload a resume to receive your personalized analysis.</span>
-            </div>
-          </div>
-        {% endif %}
-      </section>
-    </section>
+
+      <div
+        class="analysis"
+        id="analysis-content"
+      >{{ analysis }}</div>
+
+    {% else %}
+
+      <div class="empty-results">
+
+        <span
+          class="empty-icon"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24">
+            <path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5" />
+          </svg>
+        </span>
+
+        <strong>
+          Your resume insights will appear here
+        </strong>
+
+        <span>
+          Upload a resume to receive practical feedback on your strengths,
+          structure, and next improvements.
+        </span>
+
+      </div>
+
+    {% endif %}
+
+  </section>
+
+</section>
+
+
   </main>
 
   <script>
     const resumeInput = document.getElementById("resume-file");
     const fileStatus = document.getElementById("file-status");
+    const fileDrop = document.querySelector(".file-drop");
+    const uploadForm = document.querySelector(".upload-panel form");
+
+
+    const updateFileStatus = (file) => {
+      const statusText = fileStatus.querySelector("span:last-child");
+
+      statusText.textContent = file
+        ? file.name
+        : "No file selected yet";
+
+      fileStatus.classList.toggle(
+        "has-file",
+        Boolean(file)
+      );
+
+      fileDrop.classList.toggle(
+        "has-file",
+        Boolean(file)
+      );
+    };
+
 
     resumeInput.addEventListener("change", () => {
-      const file = resumeInput.files[0];
-      fileStatus.textContent = file ? `Selected: ${file.name}` : "No file selected yet";
-      fileStatus.classList.toggle("has-file", Boolean(file));
+      updateFileStatus(resumeInput.files[0]);
     });
 
-    const analysisContent = document.getElementById("analysis-content");
+
+    ["dragenter", "dragover"].forEach((eventName) => {
+      fileDrop.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        fileDrop.classList.add("is-dragging");
+      });
+    });
+
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      fileDrop.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        fileDrop.classList.remove("is-dragging");
+      });
+    });
+
+
+    fileDrop.addEventListener("drop", (event) => {
+      const [file] = event.dataTransfer.files;
+
+      if (file) {
+        const transfer = new DataTransfer();
+
+        transfer.items.add(file);
+        resumeInput.files = transfer.files;
+
+        updateFileStatus(file);
+      }
+    });
+
+
+    uploadForm.addEventListener("submit", () => {
+      const submitButton =
+        uploadForm.querySelector(".submit-button");
+
+      submitButton.classList.add("is-loading");
+
+      submitButton.setAttribute(
+        "aria-busy",
+        "true"
+      );
+
+      submitButton.querySelector("span").textContent =
+        "Reviewing your resume...";
+    });
+
+
+    const analysisContent =
+      document.getElementById("analysis-content");
+
 
     if (analysisContent) {
-      const escapeHtml = (value) => value.replace(/[&<>"']/g, (character) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      }[character]));
 
-      const formatInline = (value) => escapeHtml(value)
-        .replace(/`([^`]+)`/g, "<code>$1</code>")
-        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-        .replace(/__([^_]+)__/g, "<strong>$1</strong>")
-        .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-        .replace(/_([^_]+)_/g, "<em>$1</em>");
+      const escapeHtml = (value) =>
+        value.replace(
+          /[&<>"']/g,
+          (character) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+          }[character])
+        );
 
-      const isTableDivider = (line) => /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/.test(line);
-      const tableCells = (line) => line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((cell) => cell.trim());
+
+      const formatInline = (value) =>
+        escapeHtml(value)
+          .replace(
+            /`([^`]+)`/g,
+            "<code>$1</code>"
+          )
+          .replace(
+            /\*\*([^\*]+)\*\*/g,
+            "<strong>$1</strong>"
+          )
+          .replace(
+            /__([^_]+)__/g,
+            "<strong>$1</strong>"
+          )
+          .replace(
+            /\*([^\*]+)\*/g,
+            "<em>$1</em>"
+          )
+          .replace(
+            /_([^_]+)_/g,
+            "<em>$1</em>"
+          );
+
+
+      const isTableDivider = (line) =>
+        /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/.test(line);
+
+
+      const tableCells = (line) =>
+        line
+          .trim()
+          .replace(/^\|/, "")
+          .replace(/\|$/, "")
+          .split("|")
+          .map((cell) => cell.trim());
+
 
       const renderMarkdown = (markdown) => {
-        const lines = markdown.replace(/\r\n?/g, "\n").split("\n");
+
+        const lines = markdown
+          .replace(/\r\n?/g, "\n")
+          .split("\n");
+
         const output = [];
         let index = 0;
 
+
         while (index < lines.length) {
+
           const line = lines[index];
+
 
           if (!line.trim()) {
             index += 1;
             continue;
           }
 
-          if (index + 1 < lines.length && line.includes("|") && isTableDivider(lines[index + 1])) {
+
+          /*
+           * Markdown tables
+           */
+
+          if (
+            index + 1 < lines.length &&
+            line.includes("|") &&
+            isTableDivider(lines[index + 1])
+          ) {
+
             const headers = tableCells(line);
             const rows = [];
+
             index += 2;
-            while (index < lines.length && lines[index].includes("|") && lines[index].trim()) {
-              rows.push(tableCells(lines[index]));
+
+
+            while (
+              index < lines.length &&
+              lines[index].includes("|") &&
+              lines[index].trim()
+            ) {
+
+              rows.push(
+                tableCells(lines[index])
+              );
+
               index += 1;
             }
-            output.push(`<div class="table-scroll"><table><thead><tr>${headers.map((cell) => `<th scope="col">${formatInline(cell)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${headers.map((_, cellIndex) => `<td>${formatInline(row[cellIndex] || "")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+
+
+            output.push(`
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      ${headers
+                        .map(
+                          (cell) =>
+                            `<th scope="col">${formatInline(cell)}</th>`
+                        )
+                        .join("")}
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    ${rows
+                      .map(
+                        (row) =>
+                          `<tr>
+                            ${headers
+                              .map(
+                                (_, cellIndex) =>
+                                  `<td>${formatInline(
+                                    row[cellIndex] || ""
+                                  )}</td>`
+                              )
+                              .join("")}
+                          </tr>`
+                      )
+                      .join("")}
+                  </tbody>
+                </table>
+              </div>
+            `);
+
             continue;
           }
 
-          const heading = line.match(/^#{1,3}\s+(.+)$/);
+
+          /*
+           * Markdown headings
+           */
+
+          const heading =
+            line.match(/^#{1,3}\s+(.+)$/);
+
+
           if (heading) {
-            const level = line.match(/^#+/)[0].length;
-            output.push(`<h${level + 2}>${formatInline(heading[1])}</h${level + 2}>`);
+
+            const level =
+              line.match(/^#+/)[0].length;
+
+            output.push(
+              `<h${level + 2}>${formatInline(
+                heading[1]
+              )}</h${level + 2}>`
+            );
+
             index += 1;
             continue;
           }
+
+
+          /*
+           * Markdown bullet lists
+           */
 
           if (/^\s*[-*]\s+/.test(line)) {
+
             const items = [];
-            while (index < lines.length && /^\s*[-*]\s+/.test(lines[index])) {
-              items.push(`<li>${formatInline(lines[index].replace(/^\s*[-*]\s+/, ""))}</li>`);
+
+
+            while (
+              index < lines.length &&
+              /^\s*[-*]\s+/.test(lines[index])
+            ) {
+
+              items.push(
+                `<li>${formatInline(
+                  lines[index].replace(
+                    /^\s*[-*]\s+/,
+                    ""
+                  )
+                )}</li>`
+              );
+
               index += 1;
             }
-            output.push(`<ul>${items.join("")}</ul>`);
+
+
+            output.push(
+              `<ul>${items.join("")}</ul>`
+            );
+
             continue;
           }
 
+
+          /*
+           * Paragraphs
+           */
+
           const paragraph = [];
-          while (index < lines.length && lines[index].trim() && !/^#{1,3}\s+/.test(lines[index]) && !/^\s*[-*]\s+/.test(lines[index])) {
-            paragraph.push(formatInline(lines[index]));
+
+
+          while (
+            index < lines.length &&
+            lines[index].trim() &&
+            !/^#{1,3}\s+/.test(lines[index]) &&
+            !/^\s*[-*]\s+/.test(lines[index])
+          ) {
+
+            paragraph.push(
+              formatInline(lines[index])
+            );
+
             index += 1;
           }
-          output.push(`<p>${paragraph.join("<br>")}</p>`);
+
+
+          output.push(
+            `<p>${paragraph.join("<br>")}</p>`
+          );
+
         }
+
 
         return output.join("");
       };
 
-      analysisContent.innerHTML = renderMarkdown(analysisContent.textContent);
+
+      analysisContent.innerHTML =
+        renderMarkdown(
+          analysisContent.textContent
+        );
+
     }
+
   </script>
+
 </body>
 </html>
